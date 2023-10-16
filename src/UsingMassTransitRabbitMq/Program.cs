@@ -1,6 +1,8 @@
 using MassTransit;
 using Microsoft.Extensions.Options;
 using UsingMassTransitRabbitMq.Configurations;
+using UsingMassTransitRabbitMq.Consumers;
+using UsingMassTransitRabbitMq.Producers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,36 +22,30 @@ builder.Services.AddMassTransit(busConfigurations =>
             h.Username(settings.UserName);
             h.Password(settings.Password);
         });
+        configurator.ReceiveEndpoint("producer", ep =>
+        {
+            ep.Consumer<PersonCreatedConsumer>();
+        });
     });
+
+    busConfigurations.AddConsumer<PersonCreatedConsumer>();
+
 });
+
+builder.Services.AddTransient<IEventBus, EventBus>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-
 app.UseHttpsRedirection();
 
-var summaries = new[]
+app.MapGet("/produce", async (IEventBus eventBus, CancellationToken cancellationToken) =>
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+    var message = new PersonCreated();
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
+    await eventBus.PublishAsync(message, cancellationToken);
+
+    return Results.Ok();
 });
 
 app.Run();
 
-internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

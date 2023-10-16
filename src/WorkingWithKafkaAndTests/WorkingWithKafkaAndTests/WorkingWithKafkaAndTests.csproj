@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-WorkingWithKafkaAndTests-e0fc60ca-0886-4ddd-b093-9378124a4949</UserSecretsId>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
+		<PackageReference Include="Confluent.Kafka" Version="2.1.1" />
+		<PackageReference Include="Lightstreamer.DotNetStandard.Adapters" Version="1.14.3" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="Sentry" Version="3.33.1" />
+		<PackageReference Include="Serilog.Enrichers.Environment" Version="2.2.0" />
+		<PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
+		<PackageReference Include="Serilog.Extensions.Hosting" Version="7.0.0" />
+		<PackageReference Include="Serilog.Formatting.Elasticsearch" Version="9.0.3" />
+		<PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
+		<PackageReference Include="Serilog.Sinks.ConfluentKafka" Version="0.1.1" />
+		<PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
+		<PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Framework.Config" Version="4.0.1" />
+		<PackageReference Include="Framework.Config.Autofac" Version="4.0.1" />
+		<PackageReference Include="Framework.Consul" Version="4.0.1" />
+		<PackageReference Include="Framework.Core" Version="4.0.1" />
+		<PackageReference Include="Framework.Logging.SeriLog" Version="4.0.1" />
+		<PackageReference Include="Framework.Query" Version="4.0.1" />
+		<PackageReference Include="Framework.Redis" Version="4.0.1" />
+		<PackageReference Include="Framework.Utility" Version="4.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Models\" />
+	</ItemGroup>
+</Project>
